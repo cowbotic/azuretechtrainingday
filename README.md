@@ -306,7 +306,9 @@ node app.js > app.log &
 EOF
 
 # Exercise: use Blob Storage as the natural way of storing extension scripts
-SCRIPT_URL=$(curl -s --upload-file ./script-pokemon.sh https://transfer.sh/script-pokemon.sh) && echo $SCRIPT_URL
+  #SCRIPT_URL=$(curl -s --upload-file ./script-pokemon.sh https://transfer.sh/script-pokemon.sh) && echo $SCRIPT_URL
+az storage blob upload --account-name ${PREFIX}stacc -f ./script-pokemon.sh -c \$web -n script-pokemon.sh
+SCRIPT_URL=http://${PREFIX}stacc.blob.core.windows.net/$web/script-pokemon.sh
 
 az vm extension set \
   --resource-group $PREFIX-rg \
